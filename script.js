@@ -1,4 +1,4 @@
-let displayValue = ""
+let number = "";
 function calculator() {
     const display = document.querySelector(".display p");
         document.addEventListener("click", e => {
@@ -6,24 +6,37 @@ function calculator() {
         if (e.target.tagName == "BUTTON") {
             const button = e.target.value;
 
-            if (button === "C") {
-                while (display.firstChild) {
-                    display.removeChild(display.lastChild);
-                    displayValue = ""
-                };
-
-            };
-
-            if (button !== "C") {
+            if (button in [1,2,3,4,5,6,7,8,9,10]) {
                 const symbol = document.createTextNode(button);
                 display.appendChild(symbol);
-                
-                displayValue += button;
-                console.log(displayValue);
+                number += button;
+                console.log(number)
             };
-            
+            if (button === "C") {
+                while(display.firstChild) {
+                    display.removeChild(display.lastChild);
+                
+                number = "";
+                console.log(number);
+                }
+            };
+            if (button === "+" || button === "-" || button === "/" || button === "*") {
+                switch (button) {
+                    case "+":
+                        operand = "add"
+                    case "-":
+                        operand = "sub"
+                    case "/":
+                        operand = "div"
+                    case "*":
+                        operand = "mul"
+                };   
+                console.log(operand)
+                
+            }
         };
     });
+    
 }
 const add = function(a, b) {return a + b;};
 const sub = function(a, b) {return a - b;};
