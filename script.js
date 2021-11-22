@@ -8,7 +8,7 @@ function calculator() {
         if (e.target.tagName == "BUTTON") {
             const button = e.target.value;
 
-            if (button in [1,2,3,4,5,6,7,8,9,10]) {
+            if (button in [1,2,3,4,5,6,7,8,9,10,] || button=== "."){
                 const symbol = document.createTextNode(button);
                 display.appendChild(symbol);
                 storedNumber += button;
@@ -21,7 +21,7 @@ function calculator() {
                 secondNum = "";
             };
 
-            if (button === "+" || button === "-" || button === "/" || button === "*") {
+            if (button === "+" || button === "-" || button === "/" || button === "*") {                
                 switch (button) {
                     case "+":
                         operand = "add"
@@ -35,6 +35,8 @@ function calculator() {
                     case "*":
                         operand = "mul"
                         break;
+                    default:
+                        return;
                 };   
                 firstNum = storedNumber;
                 storedNumber = "";
@@ -42,13 +44,13 @@ function calculator() {
                 
             };
             if (button === "=") {
+                if (storedNumber === "" || firstNum === ""){
+                    return
+                }
                 clearDisplay(display);
                 const result = operate(operand, firstNum, storedNumber)
                 const final = document.createTextNode(result);
                 display.appendChild(final);
-                
-                console.log(firstNum)
-                console.log(storedNumber)
                 storedNumber = parseInt(result);
 
             };
@@ -57,8 +59,8 @@ function calculator() {
     
 }
 const add = function(a, b) {
-    a = parseInt(a)
-    b = parseInt(b)
+    a = parseFloat(a)
+    b = parseFloat(b)
     return a + b;
 };
 const sub = function(a, b) {return a - b;};
