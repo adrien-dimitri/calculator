@@ -1,27 +1,35 @@
-const display = document.querySelector(".display")
-function buttonClicked() {
-    document.addEventListener("click", e => {
-        let element = e.target;
-        if (element.tagName == "BUTTON") {
-            const id = element.getAttribute("id")
-            return id;
-        }
-    })
-}
-display.textContent = `${display}`;
+let displayValue = ""
+function calculator() {
+    const display = document.querySelector(".display p");
+        document.addEventListener("click", e => {
 
-const add = function(a, b) {
-    return a + b;
-};
-const sub = function(a, b) {
-    return a - b;
-};
-const mul = function(a, b) {
-    return a * b;
-};
-const div = function(a, b) {
-    return a / b;
-};
+        if (e.target.tagName == "BUTTON") {
+            const button = e.target.value;
+
+            if (button === "C") {
+                while (display.firstChild) {
+                    display.removeChild(display.lastChild);
+                    displayValue = ""
+                };
+
+            };
+
+            if (button !== "C") {
+                const symbol = document.createTextNode(button);
+                display.appendChild(symbol);
+                
+                displayValue += button;
+                console.log(displayValue);
+            };
+            
+        };
+    });
+}
+const add = function(a, b) {return a + b;};
+const sub = function(a, b) {return a - b;};
+const mul = function(a, b) {return a * b;};
+const div = function(a, b)  {return a / b;};
+   
 const operate = function(operator, a, b) {
     switch (operator) {
         case "add":
@@ -34,3 +42,6 @@ const operate = function(operator, a, b) {
             return div(a, b);
     };
 };
+
+
+calculator()
