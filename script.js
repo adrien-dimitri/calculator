@@ -5,25 +5,26 @@ let ongoingCalc = false;
 let periodt = false;
 
 function calculator() {
-    const display = document.querySelector(".display .res");
-    const operationDis = document.querySelector(".display .op");
+    const display = document.querySelector(".display .res"); //main display
+    const operationDis = document.querySelector(".display .op"); //operand display
     document.addEventListener("click", e => {
 
         if (e.target.tagName == "BUTTON") {
             const button = e.target.value;
             if (button === "back") {
+                if (firstNum === "") return; //if no input, skip
                 const lastItem = display.lastChild;
                 display.removeChild(lastItem);
             }
 
-            if (!periodt && button=== "."){
+            if (!periodt && button=== "."){ //check for "." and allow only one
                 const symbol = document.createTextNode(button);
                 display.appendChild(symbol);
                 storedNumber += button;
                 periodt = true;
             }
 
-            if (button in [1,2,3,4,5,6,7,8,9,10,]){
+            if (button in [1,2,3,4,5,6,7,8,9,10]){ //check for digit input
                 if (reset==false){
 
                     clearDisplay(display)
@@ -37,7 +38,7 @@ function calculator() {
             };
             
 
-            if (button === "C") {
+            if (button === "C") { //clear button
                 clearDisplay(display); clearDisplay(operationDis)
                 storedNumber = "";
                 firstNum = "";
@@ -46,8 +47,9 @@ function calculator() {
                 
             };
 
-            if (button === "+" || button === "−" || button === "÷" || button === "×") {
-                if (ongoingCalc === true) {
+            if (button === "+" || button === "−" || button === "÷" || button === "×") { //operand buttons
+
+                if (ongoingCalc === true) {  //if an operand was input already, don't calculate further
                     clearDisplay(operationDis)
                     switch (button) {
                         case "+":
@@ -66,14 +68,15 @@ function calculator() {
                             return;
                     };
                   
-                const opSymbol = document.createTextNode(button);
+                const opSymbol = document.createTextNode(button); //simply change operand 
                 operationDis.appendChild(opSymbol);
                 
                 return;
                 }
 
                 clearDisplay(operationDis)
-                if (firstNum !== ""){
+
+                if (firstNum !== ""){ //if chained calculation (no "=" used), calculate result continuously
                     clearDisplay(display)
                     const result = operate(operand, firstNum, storedNumber)
                     const final = document.createTextNode(result);
@@ -109,7 +112,8 @@ function calculator() {
                 ongoingCalc = true;
                 
             };
-            if (button === "=") {
+
+            if (button === "=") { //for "=" sign
                 clearDisplay(operationDis)
                 if (storedNumber === "" || firstNum === ""){
                     return
@@ -178,7 +182,7 @@ function clearDisplay(display) {
         display.removeChild(display.lastChild);
     }
 }
-var countDecimals = function (value) {
+const countDecimals = function (value) {
     if(Math.floor(value) === value) return 0;
     return value.toString().split(".")[1].length; 
 };
