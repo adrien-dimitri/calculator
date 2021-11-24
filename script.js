@@ -3,6 +3,7 @@ let firstNum = "";
 let reset = true;
 let ongoingCalc = false;
 let periodt = false;
+let negativeNum = false;
 
 function calculator() {
     const display = document.querySelector(".display .res"); //main display
@@ -48,6 +49,13 @@ function calculator() {
             };
 
             if (button === "+" || button === "−" || button === "÷" || button === "×") { //operand buttons
+
+                if (firstNum === "" && button === "−") {
+                    negativeNum = true;
+                    const opSymbol = document.createTextNode(button); 
+                    operationDis.appendChild(opSymbol);
+                    return;
+                }
 
                 if (ongoingCalc === true) {  //if an operand was input already, don't calculate further
                     clearDisplay(operationDis)
@@ -103,9 +111,12 @@ function calculator() {
                 };  
                 const opSymbol = document.createTextNode(button);
                 operationDis.appendChild(opSymbol);
-
-                
-                firstNum = storedNumber;
+                if (negativeNum) {
+                    firstNum = -storedNumber;
+                };
+                if (!negativeNum) {
+                    firstNum = storedNumber;
+                }
                 storedNumber = "";
                 reset = false;
                 periodt = false;
@@ -138,28 +149,30 @@ const add = function(a, b) {
     a = parseFloat(a)
     b = parseFloat(b)
     if (countDecimals(a+b) > 10) {
-        return (a+b).toFixed(10);
+        return (a+b).toFixed(9);
     }
     return (a + b);
 };
 
 const sub = function(a, b) {
+    a = parseFloat(a)
+    b = parseFloat(b)
     if (countDecimals(a-b) > 10) {
-        return (a-b).toFixed(10);
+        return (a-b).toFixed(9);
     }
     return a - b;
 };
 
 const mul = function(a, b) {
     if (countDecimals(a*b) > 10) {
-        return (a*b).toFixed(10);
+        return (a*b).toFixed(9);
     }
     return a * b;
 };
 
 const div = function(a, b)  {
     if (countDecimals(a/b) > 10) {
-        return (a/b).toFixed(10);
+        return (a/b).toFixed(9);
     }
     return a / b;
 };
