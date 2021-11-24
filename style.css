@@ -1,18 +1,20 @@
 *{
-    border-style: solid;
-    border-width: 1px;
     font-size: 50px;
     
 }
 
 .frame {
-    width: 500px;
+    width: 400px;
 }
-
+.display {
+    height: 80px;
+    text-align: right;
+}
 .buttons > *{
     display: flex;
 
 }
+
 .buttons {
     display: flex;
     flex-direction: column;
@@ -30,8 +32,11 @@ button[value ="="], button[value ="back"]{
 
 
 
-button[value ="/"],button[value ="*"], button[value ="-"], button[value ="+"], button[value ="."], 
- button[value ="C"]{
-   width: 150px;
+button[value ="/"],button[value ="*"], button[value ="-"], button[value ="+"], button[value ="."]{
+   width: 100px;
    flex-shrink: 0;
+}
+
+button[value ="C"] {
+    width: 100px;
 }
