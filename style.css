@@ -7,7 +7,14 @@
     width: 400px;
 }
 .display {
-    height: 80px;
+    height: 160px;
+    padding: 0px;
+    display: flex;
+    justify-content: space-between;   
+}
+
+
+.res {
     text-align: right;
 }
 .buttons > *{
@@ -32,7 +39,7 @@ button[value ="="], button[value ="back"]{
 
 
 
-button[value ="/"],button[value ="*"], button[value ="-"], button[value ="+"], button[value ="."]{
+button[value ="÷"],button[value ="×"], button[value ="−"], button[value ="+"], button[value ="."]{
    width: 100px;
    flex-shrink: 0;
 }
