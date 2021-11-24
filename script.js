@@ -3,7 +3,6 @@ let firstNum = "";
 let reset = true;
 let ongoingCalc = false;
 let periodt = false;
-let negativeNum = false;
 
 function calculator() {
     const display = document.querySelector(".display .res"); //main display
@@ -13,7 +12,7 @@ function calculator() {
         if (e.target.tagName == "BUTTON") {
             const button = e.target.value;
             if (button === "back") {
-                if (firstNum === "") return; //if no input, skip
+                
                 const lastItem = display.lastChild;
                 display.removeChild(lastItem);
             }
@@ -50,13 +49,6 @@ function calculator() {
 
             if (button === "+" || button === "−" || button === "÷" || button === "×") { //operand buttons
 
-                if (firstNum === "" && button === "−") {
-                    negativeNum = true;
-                    const opSymbol = document.createTextNode(button); 
-                    operationDis.appendChild(opSymbol);
-                    return;
-                }
-
                 if (ongoingCalc === true) {  //if an operand was input already, don't calculate further
                     clearDisplay(operationDis)
                     switch (button) {
@@ -74,10 +66,26 @@ function calculator() {
                             break;
                         default:
                             return;
+                        
                     };
-                  
-                const opSymbol = document.createTextNode(button); //simply change operand 
-                operationDis.appendChild(opSymbol);
+                    if (button === "−" && negativeNum===true) {
+                        clearDisplay(display);
+                        const result = operate(operand, firstNum, -storedNumber)
+                        const final = document.createTextNode(result);
+                        display.appendChild(final);
+                        const opSymbol = document.createTextNode("=");
+                        operationDis.appendChild(opSymbol);
+                        
+                        storedNumber = parseFloat(result);
+                        firstNum = "";
+                        reset = false;
+                        periodt = false;
+                        ongoingCalc = false;
+                        
+                        return;
+                    }   
+                    const opSymbol = document.createTextNode(button); //simply change operand 
+                    operationDis.appendChild(opSymbol);
                 
                 return;
                 }
@@ -89,10 +97,13 @@ function calculator() {
                     const result = operate(operand, firstNum, storedNumber)
                     const final = document.createTextNode(result);
                     display.appendChild(final);
+                    const opSymbol = document.createTextNode("=");
+                    operationDis.appendChild(opSymbol);
                     storedNumber = parseInt(result);
                     reset = false
                     firstNum = result;
                 };
+
                 switch (button) {
                     case "+":
                         operand = "add"
@@ -109,19 +120,15 @@ function calculator() {
                     default:
                         return;
                 };  
+
                 const opSymbol = document.createTextNode(button);
                 operationDis.appendChild(opSymbol);
-                if (negativeNum) {
-                    firstNum = -storedNumber;
-                };
-                if (!negativeNum) {
-                    firstNum = storedNumber;
-                }
+                firstNum = storedNumber;
                 storedNumber = "";
                 reset = false;
                 periodt = false;
                 ongoingCalc = true;
-                
+                          
             };
 
             if (button === "=") { //for "=" sign
@@ -133,6 +140,9 @@ function calculator() {
                 const result = operate(operand, firstNum, storedNumber)
                 const final = document.createTextNode(result);
                 display.appendChild(final);
+                const opSymbol = document.createTextNode("=");
+                operationDis.appendChild(opSymbol);
+                
                 storedNumber = parseFloat(result);
                 firstNum = "";
                 reset = false;
