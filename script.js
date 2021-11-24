@@ -112,14 +112,14 @@ const add = function(a, b) {
 };
 
 const sub = function(a, b) {
-    if (countDecimals(a+b) > 10) {
+    if (countDecimals(a-b) > 10) {
         return (a-b).toFixed(10);
     }
     return a - b;
 };
 
 const mul = function(a, b) {
-    if (countDecimals(a+b) > 10) {
+    if (countDecimals(a*b) > 10) {
         return (a*b).toFixed(10);
     }
     return a * b;
@@ -152,6 +152,6 @@ function clearDisplay(display) {
 }
 var countDecimals = function (value) {
     if(Math.floor(value) === value) return 0;
-    return value.toString().split(".")[1].length || 0; 
+    return value.toString().split(".")[1].length; 
 };
 calculator()
