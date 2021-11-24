@@ -1,27 +1,44 @@
 let storedNumber = "";
 let firstNum = "";
-let secondNum = "";
+let reset = true;
 function calculator() {
     const display = document.querySelector(".display p");
         document.addEventListener("click", e => {
 
         if (e.target.tagName == "BUTTON") {
             const button = e.target.value;
+            
 
             if (button in [1,2,3,4,5,6,7,8,9,10,] || button=== "."){
+                if (firstNum !== "" && reset==false){
+
+                    clearDisplay(display)
+                    reset = true
+                }
                 const symbol = document.createTextNode(button);
                 display.appendChild(symbol);
                 storedNumber += button;
+                
             };
+            
 
             if (button === "C") {
                 clearDisplay(display);
                 storedNumber = "";
                 firstNum = "";
-                secondNum = "";
+                
             };
 
             if (button === "+" || button === "-" || button === "/" || button === "*") {                
+                clearDisplay(display)
+                if (firstNum !== ""){
+                    const result = operate(operand, firstNum, storedNumber)
+                    const final = document.createTextNode(result);
+                    display.appendChild(final);
+                    storedNumber = parseInt(result);
+                    reset = false
+                    firstNum = result;
+                };
                 switch (button) {
                     case "+":
                         operand = "add"
@@ -37,10 +54,12 @@ function calculator() {
                         break;
                     default:
                         return;
-                };   
+                };  
+                
+
+                
                 firstNum = storedNumber;
                 storedNumber = "";
-                clearDisplay(display);
                 
             };
             if (button === "=") {
