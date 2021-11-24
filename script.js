@@ -1,7 +1,7 @@
 let storedNumber = "";
 let firstNum = "";
 let reset = true;
-let calculation = false;
+let ongoingCalc = false;
 let periodt = false;
 
 function calculator() {
@@ -42,10 +42,36 @@ function calculator() {
                 storedNumber = "";
                 firstNum = "";
                 periodt = false;
+                ongoingCalc = false;
                 
             };
 
-            if (button === "+" || button === "−" || button === "÷" || button === "×") {                
+            if (button === "+" || button === "−" || button === "÷" || button === "×") {
+                if (ongoingCalc === true) {
+                    clearDisplay(operationDis)
+                    switch (button) {
+                        case "+":
+                            operand = "add"
+                            break;
+                        case "−":
+                            operand = "sub"
+                            break;
+                        case "÷":
+                            operand = "div"
+                            break;
+                        case "×":
+                            operand = "mul"
+                            break;
+                        default:
+                            return;
+                    };
+                  
+                const opSymbol = document.createTextNode(button);
+                operationDis.appendChild(opSymbol);
+                
+                return;
+                }
+
                 clearDisplay(operationDis)
                 if (firstNum !== ""){
                     clearDisplay(display)
@@ -80,6 +106,7 @@ function calculator() {
                 storedNumber = "";
                 reset = false;
                 periodt = false;
+                ongoingCalc = true;
                 
             };
             if (button === "=") {
@@ -95,6 +122,7 @@ function calculator() {
                 firstNum = "";
                 reset = false;
                 periodt = false;
+                ongoingCalc = false;
 
             };
             
