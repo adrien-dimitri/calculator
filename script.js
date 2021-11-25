@@ -204,8 +204,8 @@ function calculator() {
 const add = function(a, b) {
     a = parseFloat(a)
     b = parseFloat(b)
-    if (countDecimals(a+b) > 10) {
-        return (a+b).toFixed(9);
+    if (countDecimals(a+b) > 9) {
+        return (a+b).toFixed(8);
     }
     return (a + b);
 };
@@ -213,22 +213,22 @@ const add = function(a, b) {
 const sub = function(a, b) {
     a = parseFloat(a)
     b = parseFloat(b)
-    if (countDecimals(a-b) > 10) {
-        return (a-b).toFixed(9);
+    if (countDecimals(a-b) > 9) {
+        return (a-b).toFixed(8);
     }
     return a - b;
 };
 
 const mul = function(a, b) {
-    if (countDecimals(a*b) > 10) {
-        return (a*b).toFixed(9);
+    if (countDecimals(a*b) > 9) {
+        return (a*b).toFixed(8);
     }
     return a * b;
 };
 
 const div = function(a, b)  {
-    if (countDecimals(a/b) > 10) {
-        return (a/b).toFixed(9);
+    if (countDecimals(a/b) > 9) {
+        return (a/b).toFixed(8);
     }
     return a / b;
 };
