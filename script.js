@@ -51,8 +51,13 @@ function calculator() {
             };
 
             if (button === "+" || button === "−" || button === "÷" || button === "×") { //operand buttons
-
+                
+                if (storedNumber === "" && firstNum === ""){
+                    return
+                }
                 if (ongoingCalc === true) {  //if an operand was input already, don't calculate further
+ 
+                    
                     clearDisplay(operationDis)
                     switch (button) {
                         case "+":
@@ -71,6 +76,12 @@ function calculator() {
                             return;
                         
                     };
+
+                    if (storedNumber === "") {
+                        const opSymbol = document.createTextNode(button);
+                        operationDis.appendChild(opSymbol);
+                        return;
+                    }
                     
                     clearDisplay(display);
                     const result = operate(operand, firstNum, -storedNumber)
@@ -91,6 +102,9 @@ function calculator() {
                 clearDisplay(operationDis)
 
                 if (firstNum !== ""){ //if chained calculation (no "=" used), calculate result continuously
+                    if (storedNumber === "") {
+                        return;
+                    }
                     clearDisplay(display)
                     const result = operate(operand, firstNum, storedNumber)
                     const final = document.createTextNode(result);
@@ -136,6 +150,17 @@ function calculator() {
                 if (storedNumber === "" || firstNum === ""){
                     return
                 }
+
+                if (operand === "div" && storedNumber === "0") {
+                    clearDisplay(display);
+                    const final = document.createTextNode("seriously? :D");
+                    display.appendChild(final);
+                    firstNum = "";
+                    reset = false;
+                    periodt = false;
+                    ongoingCalc = false;
+                    return;
+                }
                 clearDisplay(display);
                 const result = operate(operand, firstNum, storedNumber)
                 const final = document.createTextNode(result);
@@ -160,13 +185,13 @@ function calculator() {
                 const symbol = document.createTextNode(button);
                 display.prepend(symbol);
                 negativeNum = true;
-                firstNum = -firstNum;
+                
                 storedNumber = -storedNumber;
                 }
                 else {
                     display.removeChild(display.firstChild);
                     negativeNum = false;
-                    firstNum = -firstNum;
+                    
                     storedNumber = -storedNumber;
                 };
             };
