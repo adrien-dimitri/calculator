@@ -3,6 +3,7 @@ let firstNum = "";
 let reset = true;
 let ongoingCalc = false;
 let periodt = false;
+let negativeNum = false;
 
 function calculator() {
     const display = document.querySelector(".display .res"); //main display
@@ -11,10 +12,11 @@ function calculator() {
 
         if (e.target.tagName == "BUTTON") {
             const button = e.target.value;
-            if (button === "back") {
-                
+            if (button === "back") {    
+                storedNumber = Math.floor(storedNumber/10);
                 const lastItem = display.lastChild;
                 display.removeChild(lastItem);
+
             }
 
             if (!periodt && button=== "."){ //check for "." and allow only one
@@ -44,6 +46,7 @@ function calculator() {
                 firstNum = "";
                 periodt = false;
                 ongoingCalc = false;
+                negativeNum = false;
                 
             };
 
@@ -68,25 +71,20 @@ function calculator() {
                             return;
                         
                     };
-                    if (button === "−" && negativeNum===true) {
-                        clearDisplay(display);
-                        const result = operate(operand, firstNum, -storedNumber)
-                        const final = document.createTextNode(result);
-                        display.appendChild(final);
-                        const opSymbol = document.createTextNode("=");
-                        operationDis.appendChild(opSymbol);
-                        
-                        storedNumber = parseFloat(result);
-                        firstNum = "";
-                        reset = false;
-                        periodt = false;
-                        ongoingCalc = false;
-                        
-                        return;
-                    }   
-                    const opSymbol = document.createTextNode(button); //simply change operand 
+                    
+                    clearDisplay(display);
+                    const result = operate(operand, firstNum, -storedNumber)
+                    const final = document.createTextNode(result);
+                    display.appendChild(final);
+                    const opSymbol = document.createTextNode("=");
                     operationDis.appendChild(opSymbol);
-                
+                    
+                    storedNumber = parseFloat(result);
+                    firstNum = "";
+                    reset = false;
+                    periodt = false;
+                    ongoingCalc = false;
+
                 return;
                 }
 
@@ -128,6 +126,8 @@ function calculator() {
                 reset = false;
                 periodt = false;
                 ongoingCalc = true;
+                negativeNum = false;
+                console.log(firstNum)
                           
             };
 
@@ -142,6 +142,10 @@ function calculator() {
                 display.appendChild(final);
                 const opSymbol = document.createTextNode("=");
                 operationDis.appendChild(opSymbol);
+
+                if (result < 0) {
+                    negativeNum = true;
+                }
                 
                 storedNumber = parseFloat(result);
                 firstNum = "";
@@ -150,6 +154,23 @@ function calculator() {
                 ongoingCalc = false;
 
             };
+
+            if (button === "-"){
+                if (negativeNum === false) {
+                const symbol = document.createTextNode(button);
+                display.prepend(symbol);
+                negativeNum = true;
+                firstNum = -firstNum;
+                storedNumber = -storedNumber;
+                }
+                else {
+                    display.removeChild(display.firstChild);
+                    negativeNum = false;
+                    firstNum = -firstNum;
+                    storedNumber = -storedNumber;
+                };
+            };
+             
             
         };
     });
