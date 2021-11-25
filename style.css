@@ -46,18 +46,18 @@ body {
 button[value ="1"], button[value ="2"], button[value ="3"],
 button[value ="4"],button[value ="5"], button[value ="6"], button[value ="7"],
 button[value ="8"],button[value ="9"], button[value ="0"],
-button[value ="="], button[value ="back"]{
+ button[value ="back"]{
    flex-grow: 100;
    flex-shrink: 0;
 }
 
 
 
-button[value ="÷"],button[value ="×"], button[value ="−"], button[value ="+"], button[value ="."]{
+button[value ="÷"],button[value ="×"], button[value ="−"], button[value ="+"], button[value ="."], button[value ="="], button[value ="-"]{
    width: 100px;
    flex-shrink: 0;
 }
 
 button[value ="C"] {
-    width: 100px;
+   width: 100px;
 }
