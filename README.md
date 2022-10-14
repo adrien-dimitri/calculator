@@ -1,4 +1,5 @@
-# calculator
-Project: Calculator
+# Calculator
+Functional calculator with its real time updating display and design.
 
-Finally after learning and studying HTML, CSS and JS for about 3 weeks, I will attempt to do the Calculator project, which is the final one in the Foundations.
+
+Try it [here](https://adrien-dimitri.github.io/calculator/)
